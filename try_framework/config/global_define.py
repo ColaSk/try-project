@@ -1,0 +1,2 @@
+
+ENTRYPOINT_EXTENSIONS_ATTR = "entrypoints"
