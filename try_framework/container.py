@@ -20,15 +20,16 @@ from .utils import SpawningSet
 
 class ServiceContainer(object):
     
-    def __init__(self, service_cls):
+    def __init__(self, service_cls, config):
 
         self.service_cls = service_cls
+        self.config = config
         self.entrypoints = SpawningSet()
 
         self.init()
    
     @property
-    def _get_service_name(self):
+    def service_name(self):
         service_name = getattr(self.service_cls, 'name', None)
         if service_name is None:
             raise Exception(
@@ -51,3 +52,9 @@ class ServiceContainer(object):
     
     def test(self):
         pass
+
+def get_container_cls(config):
+    """
+    TODO: Adapt multiple service containers
+    """
+    return  ServiceContainer
