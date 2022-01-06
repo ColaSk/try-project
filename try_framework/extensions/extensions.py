@@ -1,4 +1,5 @@
 import weakref
+import inspect
 from logging import getLogger
 
 _log = getLogger(__name__)
@@ -35,3 +36,9 @@ class Extension(object):
 
 def is_extension(obj):
     return isinstance(obj, Extension)
+
+def iter_extensions(extension):
+    for _, ext in inspect.getmembers(extension, is_extension):
+        for item in iter_extensions(ext):
+            yield item
+        yield ext

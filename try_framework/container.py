@@ -17,6 +17,7 @@ Define service core container
 import inspect
 from .config import gl
 from .utils import SpawningSet
+from .extensions.extensions import iter_extensions
 
 class ServiceContainer(object):
     
@@ -26,19 +27,23 @@ class ServiceContainer(object):
         self.config = config
         self.entrypoints = SpawningSet()
 
+        """Gets the sub extension of the extension, 
+        which will be initialized when the container is initialized
+        """
+        self.subextensions = SpawningSet()
+
         self.init()
    
     @property
     def service_name(self):
         service_name = getattr(self.service_cls, 'name', None)
-        if service_name is None:
-            raise Exception(
-                'Service class must define a `name` attribute ({}.{})'.format(
-                    self.service_cls.__module__, self.service_cls.__name__))
+        service_name = self.service_cls.__name__ if service_name is None else service_name
+
         if not isinstance(service_name, str):
             raise Exception(
                 'Service name attribute must be a string ({}.{}.name)'.format(
                     self.service_cls.__module__, self.service_cls.__name__))
+                    
         return service_name
     
     def init(self):
@@ -49,6 +54,7 @@ class ServiceContainer(object):
             for entrypoint in entrypoints:
                 bound = entrypoint.bind(self, method_name)
                 self.entrypoints.add(bound)
+                self.subextensions.update(iter_extensions(bound))
     
     def test(self):
         pass
