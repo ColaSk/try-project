@@ -1,0 +1,6 @@
+class SocketIOClient(object):
+
+    def __init__(self): ...
+
+
+class RpcScoketIOClient(SocketIOClient): ...
