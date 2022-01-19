@@ -12,6 +12,9 @@ class ServerNamespace(socketio.AsyncNamespace):
 
     async def on_disconnect(self, sid: Any):
         logger.info(f'sid: {sid} disconnect success')
+    
+    async def on_handler(self, sid, data):
+        logger.info(f'sid: {sid} my_response: {data}')
 
 class AsyncSocketIOServer(object):
 
