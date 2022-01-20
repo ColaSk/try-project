@@ -45,3 +45,7 @@ class ServicesRunner(object):
     def run_services(self, *services):
         for service in services:
             self.add_service(service)
+
+    
+    def __getattr__(self, name):
+        return self.services_map.get('name')

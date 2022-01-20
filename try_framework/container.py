@@ -56,8 +56,8 @@ class ServiceContainer(object):
                 self.entrypoints.add(bound)
                 self.subextensions.update(iter_extensions(bound))
     
-    def test(self):
-        pass
+    # def __getattr__(self, name):
+    #     pass
 
 def get_container_cls(config):
     """

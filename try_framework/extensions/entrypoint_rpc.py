@@ -1,7 +1,5 @@
 from .entrypoints import Entrypoint
 
-class Rpc(Entrypoint):
-    pass
-
+class Rpc(Entrypoint): ...
 
 rpc = Rpc.decorator
